@@ -19,6 +19,8 @@ use App\Orchid\Screens\Subjects\SubjectListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\Year\YearEditScreen;
+use App\Orchid\Screens\Year\YearListScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -117,4 +119,18 @@ Route::screen('subject/{subject?}', SubjectEditScreen::class)
         $trail->parent('platform.index')
             ->push('Subjects', route('platform.subjects'))
             ->push($class ? 'Edit Subject' : 'Create Subject');
+    });
+
+Route::screen('years', YearListScreen::class)
+    ->name('platform.years')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+            ->parent('platform.index')
+            ->push('Year'));
+            
+Route::screen('year/{year?}', YearEditScreen::class)
+    ->name('platform.years.edit')
+    ->breadcrumbs(function (Trail $trail, $class = null) {
+        $trail->parent('platform.index')
+            ->push('Year', route('platform.years'))
+            ->push($class ? 'Edit Academic Year' : 'Create Academic Year');
     });

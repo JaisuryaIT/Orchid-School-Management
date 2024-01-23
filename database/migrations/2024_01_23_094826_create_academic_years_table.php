@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('academic_years', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();$table->date('startdate');
-            $table->date('enddate');
-            $table->unique(['startdate', 'enddate'], 'unique_academic_year');
+            $table->string('name')->unique();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->unique(['start_date', 'end_date'], 'unique_academic_year');
             $table->timestamps();
         });
     }

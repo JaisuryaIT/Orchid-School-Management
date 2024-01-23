@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Orchid\Screens\Subjects;
+namespace App\Orchid\Screens\Year;
 
-use App\Models\Subjects;
-use App\Orchid\Layouts\Subjects\SubjectListLayout;
+use App\Models\AcademicYear;
+use App\Orchid\Layouts\Year\YearListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 
-class SubjectListScreen extends Screen
+class YearListScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
@@ -19,7 +19,7 @@ class SubjectListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'subjects' => Subjects::paginate(10)
+            'years' => AcademicYear::orderBy('start_date', 'asc')->paginate(10)
         ];
     }
 
@@ -30,7 +30,7 @@ class SubjectListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Subjects';
+        return 'Academic Years';
     }
 
     /**
@@ -41,8 +41,8 @@ class SubjectListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Add Subject')
-                ->route('platform.subjects.edit')
+            Link::make('Add Academic Year')
+                ->route('platform.years.edit')
                 ->icon('bs.plus-circle'),
         ];
     }
@@ -54,14 +54,14 @@ class SubjectListScreen extends Screen
      */
     public function layout(): iterable
     {
-            return [
-                SubjectListLayout::class,
+        return [
+            YearListLayout::class
         ];
     }
     public function remove(Request $request): void
     {
-        $subject=Subjects::findOrFail($request->get('id'));
-        $subject->delete();
-        Toast::error($subject['subject_name'].' Was Removed Succesfully');
+        $year=AcademicYear::findOrFail($request->get('id'));
+        $year->delete();
+        Toast::error($year['name'].' Was Removed Succesfully');
     }
 }

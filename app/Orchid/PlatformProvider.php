@@ -38,9 +38,14 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.book')
                 ->title('Management')
                 ->route('platform.subjects')
-                ->permission('platform.subjects')
-                ->divider(),
+                ->permission('platform.subjects'),
 
+            Menu::make('Acadmeic Year')
+                ->icon('bs.calendar')
+                ->route('platform.years')
+                ->permission('platform.years')
+                ->divider(),
+            
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -65,6 +70,7 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('System'))
                 ->addPermission('platform.subjects', 'Subjects')
+                ->addPermission('platform.years', 'Years')
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
         ];

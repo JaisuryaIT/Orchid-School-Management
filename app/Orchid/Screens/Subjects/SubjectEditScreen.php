@@ -43,7 +43,7 @@ class SubjectEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make('Create Subject')
+            Button::make('Create')
                 ->icon('bs.check-circle')
                 ->method('createOrUpdate')
                 ->canSee(!$this->subject->exists),
