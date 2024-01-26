@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Orchid\Layouts\Subjects;
+namespace App\Orchid\Layouts\ExamTypes;
 
-use App\Models\Subjects;
+use App\Models\ExamTypes;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class SubjectListLayout extends Table
+class ExamTypeListLayout extends Table
 {
     /**
      * Data source.
@@ -19,7 +19,7 @@ class SubjectListLayout extends Table
      *
      * @var string
      */
-    protected $target = 'subjects';
+    protected $target = 'exam_types';
 
     /**
      * Get the table cells to be displayed.
@@ -29,21 +29,23 @@ class SubjectListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('subject_name','Subject Name'),
-            TD::make('subject_code','Subject Code'),
+            TD::make('exam_type_name','Exam Type Name'),
+            TD::make('exam_type_code','Exam Type Code'),
+            TD::make('pass_mark','Pass Mark'),
+            TD::make('total_mark','Total Mark'),
             TD::make('Actions')
             ->align(TD::ALIGN_CENTER)
             ->width('100px')
-            ->render(fn (Subjects $subject) => DropDown::make()
+            ->render(fn (ExamTypes $exam_type) => DropDown::make()
                 ->icon('bs.three-dots-vertical')
                 ->list([
                     Link::make('Edit')
-                        ->route('platform.subjects.edit', $subject)
+                        ->route('platform.exam_types.edit', $exam_type)
                         ->icon('bs.pencil'),
                     Button::make('Remove')
                         ->icon('bs.trash3')
-                        ->confirm($subject->subject_name.' Will be Removed Forever')
-                        ->method('remove', ['id' => $subject->id,]),
+                        ->confirm($exam_type->exam_type_name.' Will be Removed Forever')
+                        ->method('remove', ['id' => $exam_type->id,]),
                 ])),
         ];
     }

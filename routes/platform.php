@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Layouts\ExamTypes\ExamTypeListLayout;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -11,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\ExamTypes\ExamTypeEditScreen;
+use App\Orchid\Screens\ExamTypes\ExamTypeListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -36,8 +39,11 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
-    ->name('platform.main');
+Route::screen('/main',  SubjectListScreen::class)
+    ->name('platform.main')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Subjects'));
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
@@ -133,4 +139,18 @@ Route::screen('year/{year?}', YearEditScreen::class)
         $trail->parent('platform.index')
             ->push('Year', route('platform.years'))
             ->push($class ? 'Edit Academic Year' : 'Create Academic Year');
+    });
+
+Route::screen('exam_types', ExamTypeListScreen::class)
+    ->name('platform.exam_types')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+            ->parent('platform.index')
+            ->push('Exam Types'));
+            
+Route::screen('exam_type/{exam_type?}', ExamTypeEditScreen::class)
+    ->name('platform.exam_types.edit')
+    ->breadcrumbs(function (Trail $trail, $class = null) {
+        $trail->parent('platform.index')
+            ->push('Exam Types', route('platform.exam_types'))
+            ->push($class ? 'Edit Exam Type' : 'Create Exam Type');
     });

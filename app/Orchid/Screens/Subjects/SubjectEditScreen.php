@@ -32,7 +32,7 @@ class SubjectEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->subject->exists ? 'Edit subject' : 'Create subject';
+        return $this->subject->exists ? 'Edit Subject' : 'Create Subject';
     }
 
     /**
@@ -87,14 +87,19 @@ class SubjectEditScreen extends Screen
     public function createOrUpdate(Request $request)
     {
         $subjectData = $request->get('subject');
-        $existingSubject = Subjects::where('subject_code', $subjectData['subject_code'])->first();
-
-        if ($existingSubject && $existingSubject->id !== $this->subject->id) {
+        $existingSubjectName = Subjects::where('subject_name', $subjectData['subject_name'])->first();
+        $existingSubjectCode = Subjects::where('subject_code', $subjectData['subject_code'])->first();
+        if ($existingSubjectName && $existingSubjectName->id !== $this->subject->id) {
+            Toast::warning('Subject with Subject Name "'.$subjectData['subject_name'].'" is Already Created, Try With New Subject Name');
+            return redirect()->back()->withInput();
+        }
+        if ($existingSubjectCode && $existingSubjectCode->id !== $this->subject->id) {
             Toast::warning('Subject with Subject Code "'.$subjectData['subject_code'].'" is Already Created, Try With New Subject Code');
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
         $this->subject->fill($subjectData)->save();
-        $this->subject->exists ? Toast::success($this->subject['subject_name'].' Was Updated Successfully') : Toast::info('Subject Created Successfully');
+        $message = $this->subject->exists ? 'Was Updated Successfully' : 'Created Successfully';
+        Toast::success($this->subject['subject_name'] . ' ' . $message);
         return redirect()->route('platform.subjects');
     }
     public function remove()

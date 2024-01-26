@@ -93,8 +93,22 @@ class YearEditScreen extends Screen
     public function createOrUpdate(Request $request)
     {
         $yearData = $request->get('year');
+        $existingYearName = $this->year->where('name', $yearData['name'])->first();
+        $existingYear = $this->year
+            ->where('start_date', $yearData['start_date'])
+            ->where('end_date', $yearData['end_date'])
+            ->first();
+        if ($existingYearName && $existingYear->id !== $this->year->id) {
+            Toast::warning('Academic Year with Name "'.$yearData['name'].'" is Already Created, Try With New Name');
+            return redirect()->back()->withInput();
+        }
+        if ($existingYear && $existingYear->id !== $this->year->id) {
+            Toast::warning('Academic Year with Start Date "'.$yearData['start_date'].'" & End Date "'.$yearData['end_date'].'" is Already Created, Try With New Entries');
+            return redirect()->back()->withInput();
+        }
         $this->year->fill($yearData)->save();
-        $this->year->exists ? Toast::success($this->year['name'].' Was Updated Successfully') : Toast::info('Academic Year Created Successfully');
+        $message = $this->year->exists ? 'Was Updated Successfully' : 'Created Successfully';
+        Toast::success($this->year['name'] . ' ' . $message);
         return redirect()->route('platform.years');
     }
     public function remove()

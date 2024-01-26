@@ -43,9 +43,14 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Acadmeic Year')
                 ->icon('bs.calendar')
                 ->route('platform.years')
-                ->permission('platform.years')
+                ->permission('platform.years'),
+
+            Menu::make('Exam Types')
+                ->icon('bs.clock-history')
+                ->route('platform.exam_types')
+                ->permission('platform.exam_types')
                 ->divider(),
-            
+
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -71,6 +76,7 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('System'))
                 ->addPermission('platform.subjects', 'Subjects')
                 ->addPermission('platform.years', 'Years')
+                ->addPermission('platform.exam_types', 'Exam Type')
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
         ];
