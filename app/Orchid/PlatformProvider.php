@@ -44,6 +44,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.calendar')
                 ->route('platform.years')
                 ->permission('platform.years'),
+            
+            Menu::make('Teacher')
+                ->icon('bs.person')
+                ->route('platform.teachers')
+                ->permission('platform.teachers'),
 
             Menu::make('Exam Types')
                 ->icon('bs.clock-history')
@@ -74,8 +79,9 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             ItemPermission::group(__('System'))
-                ->addPermission('platform.subjects', 'Subjects')
-                ->addPermission('platform.years', 'Years')
+                ->addPermission('platform.subjects', 'Subject')
+                ->addPermission('platform.years', 'Year')
+                ->addPermission('platform.teachers', 'Teacher')
                 ->addPermission('platform.exam_types', 'Exam Type')
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),

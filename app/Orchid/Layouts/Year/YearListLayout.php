@@ -30,8 +30,14 @@ class YearListLayout extends Table
     {
         return [
             TD::make('name','Name'),
-            TD::make('start_date','Start Date'),
-            TD::make('end_date','End Date'),
+            TD::make('start_date', 'Start Date')
+                ->render(function (AcademicYear $year) {
+                    return \Carbon\Carbon::parse($year->start_date)->format('d-m-Y');
+            }),
+            TD::make('start_date', 'End Date')
+                ->render(function (AcademicYear $year) {
+                    return \Carbon\Carbon::parse($year->end_date)->format('d-m-Y');
+            }),
             TD::make('Actions')
             ->align(TD::ALIGN_CENTER)
             ->width('100px')

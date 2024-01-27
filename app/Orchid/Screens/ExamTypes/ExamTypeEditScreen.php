@@ -109,9 +109,9 @@ class ExamTypeEditScreen extends Screen
             Toast::warning('Exam Type with Exam Type Code "'.$exam_typeData['exam_type_code'].'" is Already Created, Try With New Exam Type Code');
             return redirect()->back()->withInput();
         }
-        $this->exam_type->fill($exam_typeData)->save();
         $message = $this->exam_type->exists ? 'Was Updated Successfully' : 'Created Successfully';
         Toast::success($this->exam_type['exam_type_name'] . ' ' . $message);
+        $this->exam_type->fill($exam_typeData)->save();
         return redirect()->route('platform.exam_types');
     }
     public function remove()

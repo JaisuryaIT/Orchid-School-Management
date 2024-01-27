@@ -106,9 +106,9 @@ class YearEditScreen extends Screen
             Toast::warning('Academic Year with Start Date "'.$yearData['start_date'].'" & End Date "'.$yearData['end_date'].'" is Already Created, Try With New Entries');
             return redirect()->back()->withInput();
         }
-        $this->year->fill($yearData)->save();
-        $message = $this->year->exists ? 'Was Updated Successfully' : 'Created Successfully';
+        $message = $this->year->exists ? 'Was Updated Successfully' : 'Year Created Successfully';
         Toast::success($this->year['name'] . ' ' . $message);
+        $this->year->fill($yearData)->save();
         return redirect()->route('platform.years');
     }
     public function remove()

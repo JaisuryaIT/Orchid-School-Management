@@ -19,6 +19,8 @@ use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\Subjects\SubjectEditScreen;
 use App\Orchid\Screens\Subjects\SubjectListScreen;
+use App\Orchid\Screens\Teachers\TeacherEditScreen;
+use App\Orchid\Screens\Teachers\TeacherListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -121,10 +123,10 @@ Route::screen('subjects', SubjectListScreen::class)
             
 Route::screen('subject/{subject?}', SubjectEditScreen::class)
     ->name('platform.subjects.edit')
-    ->breadcrumbs(function (Trail $trail, $class = null) {
+    ->breadcrumbs(function (Trail $trail, $subject = null) {
         $trail->parent('platform.index')
             ->push('Subjects', route('platform.subjects'))
-            ->push($class ? 'Edit Subject' : 'Create Subject');
+            ->push($subject ? 'Edit Subject' : 'Create Subject');
     });
 
 Route::screen('years', YearListScreen::class)
@@ -135,10 +137,10 @@ Route::screen('years', YearListScreen::class)
             
 Route::screen('year/{year?}', YearEditScreen::class)
     ->name('platform.years.edit')
-    ->breadcrumbs(function (Trail $trail, $class = null) {
+    ->breadcrumbs(function (Trail $trail, $year = null) {
         $trail->parent('platform.index')
             ->push('Year', route('platform.years'))
-            ->push($class ? 'Edit Academic Year' : 'Create Academic Year');
+            ->push($year ? 'Edit Academic Year' : 'Create Academic Year');
     });
 
 Route::screen('exam_types', ExamTypeListScreen::class)
@@ -149,8 +151,22 @@ Route::screen('exam_types', ExamTypeListScreen::class)
             
 Route::screen('exam_type/{exam_type?}', ExamTypeEditScreen::class)
     ->name('platform.exam_types.edit')
-    ->breadcrumbs(function (Trail $trail, $class = null) {
+    ->breadcrumbs(function (Trail $trail, $exam_type = null) {
         $trail->parent('platform.index')
             ->push('Exam Types', route('platform.exam_types'))
-            ->push($class ? 'Edit Exam Type' : 'Create Exam Type');
+            ->push($exam_type ? 'Edit Exam Type' : 'Create Exam Type');
+    });
+
+Route::screen('teachers', TeacherListScreen::class)
+    ->name('platform.teachers')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+            ->parent('platform.index')
+            ->push('Teachers'));
+            
+Route::screen('teacher/{teacher?}', TeacherEditScreen::class)
+    ->name('platform.teachers.edit')
+    ->breadcrumbs(function (Trail $trail, $teacher = null) {
+        $trail->parent('platform.index')
+            ->push('Teachers', route('platform.teachers'))
+            ->push($teacher ? 'Edit Teacher' : 'Create Teacher');
     });

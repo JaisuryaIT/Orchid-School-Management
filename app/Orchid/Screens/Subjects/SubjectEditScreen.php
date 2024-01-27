@@ -97,9 +97,9 @@ class SubjectEditScreen extends Screen
             Toast::warning('Subject with Subject Code "'.$subjectData['subject_code'].'" is Already Created, Try With New Subject Code');
             return redirect()->back()->withInput();
         }
-        $this->subject->fill($subjectData)->save();
-        $message = $this->subject->exists ? 'Was Updated Successfully' : 'Created Successfully';
+        $message = $this->subject->exists ? 'Was Updated Successfully' : 'Subject Created Successfully';
         Toast::success($this->subject['subject_name'] . ' ' . $message);
+        $this->subject->fill($subjectData)->save();
         return redirect()->route('platform.subjects');
     }
     public function remove()
