@@ -43,4 +43,8 @@ class Teachers extends Model
     {
         return $this->belongsTo(Subjects::class);
     }
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

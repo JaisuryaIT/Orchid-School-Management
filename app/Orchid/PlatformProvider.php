@@ -49,6 +49,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.person')
                 ->route('platform.teachers')
                 ->permission('platform.teachers'),
+            
+            Menu::make('Classes')
+                ->icon('bs.cast')
+                ->route('platform.classes')
+                ->permission('platform.classes'),
 
             Menu::make('Exam Types')
                 ->icon('bs.clock-history')
@@ -82,6 +87,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.subjects', 'Subject')
                 ->addPermission('platform.years', 'Year')
                 ->addPermission('platform.teachers', 'Teacher')
+                ->addPermission('platform.classes', 'Classes')
                 ->addPermission('platform.exam_types', 'Exam Type')
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),

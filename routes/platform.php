@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Orchid\Layouts\ExamTypes\ExamTypeListLayout;
+use App\Orchid\Screens\Classes\ClassEditScreen;
+use App\Orchid\Screens\Classes\ClassListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -169,4 +171,18 @@ Route::screen('teacher/{teacher?}', TeacherEditScreen::class)
         $trail->parent('platform.index')
             ->push('Teachers', route('platform.teachers'))
             ->push($teacher ? 'Edit Teacher' : 'Create Teacher');
+    });
+
+Route::screen('classes', ClassListScreen::class)
+    ->name('platform.classes')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+            ->parent('platform.index')
+            ->push('Classes'));
+            
+Route::screen('class/{class?}', ClassEditScreen::class)
+    ->name('platform.classes.edit')
+    ->breadcrumbs(function (Trail $trail, $class = null) {
+        $trail->parent('platform.index')
+            ->push('Classes', route('platform.classes'))
+            ->push($class ? 'Edit Class' : 'Create Class');
     });
